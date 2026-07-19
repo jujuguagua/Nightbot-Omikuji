@@ -28,7 +28,7 @@ fetch("./omikuji.json")
 
 
     const result =
-`${user} 抽到了！⛩️ 第${kuji.id}籤【${kuji.luck}】 神諭：${kuji.oracle} ${kuji.message}`;
+`${user} 抽到第${kuji.id}籤【${kuji.luck}】${kuji.oracle}`;
 
 
     document.getElementById("result").innerText = result;
