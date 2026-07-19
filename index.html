@@ -2,44 +2,44 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>神社抽籤</title>
+<title>神社抽籤 API</title>
 </head>
 
 <body>
 
-<h1>⛩️ 神社抽籤</h1>
-
-<div id="result">正在抽籤...</div>
+<div id="result">
+正在抽籤...
+</div>
 
 <script>
 
+const params = new URLSearchParams(window.location.search);
+
+const user = params.get("user") || "旅人";
+
+
 fetch("./omikuji.json")
-.then(response => {
-    if (!response.ok) {
-        throw new Error("找不到 JSON");
-    }
-    return response.json();
-})
+.then(response => response.json())
+
 .then(data => {
 
-    const random =
+    const kuji =
     data[Math.floor(Math.random() * data.length)];
 
-    document.getElementById("result").innerHTML =
-    `
-    ⛩️ 第 ${random.id} 籤<br>
-    【${random.luck}】<br>
-    <br>
-    ${random.oracle}<br>
-    <br>
-    神諭：${random.message}
-    `;
+
+    const result =
+`${user} 抽到了！⛩️ 第${kuji.id}籤【${kuji.luck}】 神諭：${kuji.oracle} ${kuji.message}`;
+
+
+    document.getElementById("result").innerText = result;
+
 
 })
+
 .catch(error => {
 
-    document.getElementById("result").innerHTML =
-    "❌ JSON讀取失敗：" + error;
+    document.getElementById("result").innerText =
+    "抽籤失敗";
 
 });
 
