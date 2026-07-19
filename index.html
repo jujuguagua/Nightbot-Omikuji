@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>神社抽籤 API</title>
+</head>
+
+<body>
+
+<h1>⛩️ 神社抽籤系統</h1>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const user = urlParams.get("user") || "旅人";
+
+fetch("omikuji.json")
+.then(response => response.json())
+.then(data => {
+
+    const random =
+    data[Math.floor(Math.random() * data.length)];
+
+    const result =
+    `${user} 抽到了！ ⛩️ 第${random.id}籤【${random.luck}】 ${random.oracle} 神諭：${random.message}`;
+
+    document.body.innerHTML = result;
+
+})
+.catch(error => {
+
+    document.body.innerHTML =
+    "抽籤失敗，請稍後再試。";
+
+});
+</script>
+
+</body>
+</html>
